@@ -65,39 +65,6 @@ class _RealtimeScreenState extends State<RealtimeScreen> {
               } else {
                 return const Center(child: CircularProgressIndicator());
               }
-              // Map<String, String> castedMessagesMap = {};
-
-              // messagesMap.forEach((key, value) {
-              //   if (key != null && value != null) {
-              //     castedMessagesMap[key.toString()] = value.toString();
-              //   }
-              // });
-
-              // print(castedMessagesMap);
-
-              // castedMessagesMap.forEach((key, value) {
-              //   String jsonString =
-              //       '{"${value.replaceAll(':', '":"').replaceAll(', ', '", "')}"}';
-              //   Map<String, String> resultMap = json.decode(jsonString);
-              //   messages.add(MessageModel.fromJson(resultMap));
-              // });
-              // print(messages);
-              return Expanded(
-                child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  itemCount: messages.length,
-                  itemBuilder: (context, index) {
-                    return Flexible(
-                      child: Row(
-                        children: [
-                          Text(messages[index].message),
-                          Text(messages[index].sender),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              );
             },
           ),
         ],
