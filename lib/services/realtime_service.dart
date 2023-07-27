@@ -8,13 +8,12 @@ class RealtimeService {
     _messagesRef = _database.ref('messages');
   }
 
-  Future<void> sendMessage(String senderId, String message) async {
+  Future<void> sendMessage(String sender, String message) async {
     try {
       final messageRef = _messagesRef.push();
       await messageRef.set({
-        'senderId': senderId,
+        'sender': sender,
         'message': message,
-        'timestamp': DateTime.now().millisecondsSinceEpoch,
       });
     } catch (error) {
       print('메시지 전송 오류: $error');
@@ -22,6 +21,6 @@ class RealtimeService {
   }
 
   Stream<DatabaseEvent> getMessagesStream() {
-    return _messagesRef.orderByChild('timestamp').onValue;
+    return _messagesRef.onValue;
   }
 }
