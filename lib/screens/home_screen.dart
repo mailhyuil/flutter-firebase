@@ -27,33 +27,35 @@ class _HomeScreenState extends State<HomeScreen> {
       appBarTitle: 'Home',
       body: Column(
         children: [
-          Form(
-            child: TextFormField(
-              onFieldSubmitted: (value) {
-                firestoreService.createMemo(
-                  MemoModel(
-                      title: value,
-                      content: 'content',
-                      createdAt: DateTime.now(),
-                      updatedAt: DateTime.now()),
-                );
-              },
-              decoration: const InputDecoration(
-                labelText: 'Title',
+          Flexible(
+            child: Form(
+              child: TextFormField(
+                onFieldSubmitted: (value) {
+                  firestoreService.createMemo(
+                    MemoModel(
+                        title: value,
+                        content: 'content',
+                        createdAt: DateTime.now(),
+                        updatedAt: DateTime.now()),
+                  );
+                },
+                decoration: const InputDecoration(
+                  labelText: 'Title',
+                ),
               ),
             ),
           ),
-          StreamBuilder<List<MemoModel>>(
-            stream: firestoreService.getMemos(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator(); // 로딩 중이면 로딩 표시
-              } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else {
-                memos = snapshot.data ?? []; // 스트림에서 가져온 데이터를 memos 리스트에 할당
-                return Expanded(
-                  child: ListView.builder(
+          Expanded(
+            child: StreamBuilder<List<MemoModel>>(
+              stream: firestoreService.getMemos(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator(); // 로딩 중이면 로딩 표시
+                } else if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  memos = snapshot.data ?? []; // 스트림에서 가져온 데이터를 memos 리스트에 할당
+                  return ListView.builder(
                     scrollDirection: Axis.vertical,
                     itemCount: memos.length,
                     itemBuilder: (context, index) {
@@ -61,10 +63,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Text(memos[index].title),
                       );
                     },
-                  ),
-                );
-              }
-            },
+                  );
+                }
+              },
+            ),
           ),
         ],
       ),

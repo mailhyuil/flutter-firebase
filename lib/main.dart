@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase/screens/home_screen.dart';
+import 'package:flutter_firebase/screens/animation_screen.dart';
 import 'package:flutter_firebase/services/firestore_service.dart';
 import 'package:flutter_firebase/services/realtime_service.dart';
 import 'package:get_it/get_it.dart';
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      home: const AnimationScreen(),
     );
   }
 }

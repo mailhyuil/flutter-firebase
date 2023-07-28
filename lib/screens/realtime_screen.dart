@@ -23,32 +23,34 @@ class _RealtimeScreenState extends State<RealtimeScreen> {
       appBarTitle: 'Realtime',
       body: Column(
         children: [
-          Form(
-            child: TextFormField(
-              onFieldSubmitted: (value) {
-                _realtimeService.sendMessage('hyuil', value);
-              },
-              decoration: const InputDecoration(
-                labelText: 'Title',
+          Flexible(
+            child: Form(
+              child: TextFormField(
+                onFieldSubmitted: (value) {
+                  _realtimeService.sendMessage('hyuil', value);
+                },
+                decoration: const InputDecoration(
+                  labelText: 'Title',
+                ),
               ),
             ),
           ),
-          StreamBuilder<DatabaseEvent>(
-            stream: _realtimeService.getMessagesStream(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData && snapshot.data!.snapshot.value != null) {
-                final values =
-                    (snapshot.data!.snapshot.value as Map<Object?, Object?>)
-                        .values;
-                messages.clear();
-                for (var element in values) {
-                  final encoded = jsonEncode(element);
-                  final decoded = jsonDecode(encoded);
-                  MessageModel model = MessageModel.fromJson(decoded);
-                  messages.add(model);
-                }
-                return Expanded(
-                  child: ListView.builder(
+          Expanded(
+            child: StreamBuilder<DatabaseEvent>(
+              stream: _realtimeService.getMessagesStream(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData && snapshot.data!.snapshot.value != null) {
+                  final values =
+                      (snapshot.data!.snapshot.value as Map<Object?, Object?>)
+                          .values;
+                  messages.clear();
+                  for (var element in values) {
+                    final encoded = jsonEncode(element);
+                    final decoded = jsonDecode(encoded);
+                    MessageModel model = MessageModel.fromJson(decoded);
+                    messages.add(model);
+                  }
+                  return ListView.builder(
                     scrollDirection: Axis.vertical,
                     itemCount: messages.length,
                     itemBuilder: (context, index) {
@@ -60,12 +62,12 @@ class _RealtimeScreenState extends State<RealtimeScreen> {
                         ],
                       );
                     },
-                  ),
-                );
-              } else {
-                return const Center(child: CircularProgressIndicator());
-              }
-            },
+                  );
+                } else {
+                  return const Center(child: CircularProgressIndicator());
+                }
+              },
+            ),
           ),
         ],
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase/screens/animation_screen.dart';
 import 'package:flutter_firebase/screens/home_screen.dart';
 import 'package:flutter_firebase/screens/realtime_screen.dart';
 
@@ -42,6 +43,15 @@ class CustomScaffold extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) => const RealtimeScreen()));
+              },
+            ),
+            ListTile(
+              title: const Text('Animation'),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const AnimationScreen()));
               },
             ),
           ],
